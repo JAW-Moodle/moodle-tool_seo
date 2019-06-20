@@ -1,4 +1,4 @@
-# Moodle SEO admin too
+# Moodle SEO admin tool
 
 This is an admin tool to help manage SEO issues. 
 
