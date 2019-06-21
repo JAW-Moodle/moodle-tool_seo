@@ -27,9 +27,30 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Callback that adds a custom html header tag to each page.
  *
- * @return str valid html head content
+ * @return string Valid html head content.
  * @since  Moodle 3.3
  */
 function tool_seo_before_standard_html_head() {
-    return '<meta name="author" content="andrew" />';
+    global $PAGE;
+
+    // Pages to exclude from the search engine noindex block.
+    $excludedpages = ['test', 'logi'];
+
+    // Get the current pagetype to pass to a closure.
+    $pagetype = $PAGE->pagetype;
+
+    // Check if the current page type matches any of the excluded page types.
+    foreach ($excludedpages as $excludedpage) {
+        $excludedpagetypepatterns = matching_page_type_patterns_from_pattern($excludedpage);
+        $matchingpagetypes = array_filter($excludedpagetypepatterns, function($excludedpagetypepattern) use ($pagetype) {
+            // Replace '-' with escaped literal for pattern.
+            $pattern = "/" . preg_replace("/\-/", "\-", $excludedpagetypepattern) . "/";
+            return preg_match($pattern, $pagetype);
+        });
+        if ($matchingpagetypes) {
+            return '';
+        }
+    }
+
+    return '<meta name="robots" content="noindex, nofollow" />';
 }
