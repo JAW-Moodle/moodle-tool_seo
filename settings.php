@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for SEO tool
+ * Admin settings for tool
  *
  * @package    tool_seo
  * @author     Andrew Madden <andrewmadden@catalyst-au.net>
@@ -23,8 +23,21 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'SEO';
+defined('MOODLE_INTERNAL') || die();
 
-// Settings.
-$string['noindexexcluded'] = 'Include URLs to be indexed by search engines.';
-$string['noindexexcluded_help'] = 'List of (comma separated, absolute skipping wwwroot, callable) URLs that will be profiled by search engines.';
+if ($hassiteconfig) {
+
+    $settings = new admin_settingpage('tool_seo', get_string('pluginname', 'tool_seo'));
+
+    $ADMIN->add('tools', $settings);
+    if (!during_initial_install()) {
+
+        // List of URLs that won't be profiled ever.
+        $settings->add(new admin_setting_configtextarea('tool_seo/noindexexcluded',
+            new lang_string('noindexexcluded', 'tool_seo'),
+            new lang_string('noindexexcluded_help', 'tool_seo'),
+            ''));
+    }
+}
+
+
