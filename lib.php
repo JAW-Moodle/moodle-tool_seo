@@ -33,8 +33,9 @@ require_once(__DIR__ . '/locallib.php');
  * @since  Moodle 3.3
  */
 function tool_seo_before_standard_html_head() {
+    global $PAGE;
 
-    if (tool_seo_is_current_url_excluded()) {
+    if (tool_seo_is_url_excluded($PAGE->url->get_path())) {
         return '';
     }
 

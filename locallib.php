@@ -30,23 +30,21 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Checks whether the current URL is listed in the excluded URLs in the admin tools.
  *
+ * @param $currentpath string The path component of the current URL to compare against.
  * @return bool
  */
-function tool_seo_is_current_url_excluded() {
-    global $PAGE;
+function tool_seo_is_url_excluded($currentpath) {
 
     // Get the list of URLs to be excluded from the admin settings.
     try {
         $excludedurlstring = get_config('tool_seo', 'noindexexcluded');
     } catch(dml_exception $e) {
-        $excludedurlstring = '';
+        return false;
     }
 
     $excludedurls = array_map('trim', explode(',', $excludedurlstring));
 
-    $currenturl = $PAGE->url->get_path();
-
-    if (in_array($currenturl, $excludedurls)) {
+    if (in_array($currentpath, $excludedurls)) {
         return true;
     }
     return false;
