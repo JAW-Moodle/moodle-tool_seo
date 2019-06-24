@@ -35,9 +35,10 @@ require_once(__DIR__ . '/locallib.php');
 function tool_seo_before_standard_html_head() {
     global $PAGE;
 
-    if (tool_seo_is_url_excluded($PAGE->url->get_path())) {
-        return '';
+    // If URL should not be indexed, add the noindex meta tag to page.
+    if (tool_seo_is_url_indexable($PAGE->url->get_path()) == false) {
+        return '<meta name="robots" content="noindex, nofollow" />';
     }
 
-    return '<meta name="robots" content="noindex, nofollow" />';
+    return '';
 }

@@ -33,9 +33,9 @@ if ($hassiteconfig) {
     if (!during_initial_install()) {
 
         // List of URLs that won't be profiled ever.
-        $settings->add(new admin_setting_configtextarea('tool_seo/noindexexcluded',
-            new lang_string('noindexexcluded', 'tool_seo'),
-            new lang_string('noindexexcluded_help', 'tool_seo'),
+        $settings->add(new admin_setting_configtextarea('tool_seo/nonindexable',
+            new lang_string('nonindexable', 'tool_seo'),
+            new lang_string('nonindexable_help', 'tool_seo'),
             ''));
     }
 }

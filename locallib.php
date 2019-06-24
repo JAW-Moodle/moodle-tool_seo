@@ -28,26 +28,26 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Checks whether the current URL is listed in the excluded URLs in the admin tools.
+ * Checks whether the current URL is listed in the URLs to not be indexed in admin tools.
  *
  * @param $currentpath string The path component of the current URL to compare against.
- * @return bool
+ * @return bool Returns true if the URL should be indexable by search engines.
  */
-function tool_seo_is_url_excluded($currentpath) {
+function tool_seo_is_url_indexable($currentpath) {
 
     // Get the list of URLs to be excluded from the admin settings.
     try {
-        $excludedurlstring = get_config('tool_seo', 'noindexexcluded');
+        $nonindexedurlstring = get_config('tool_seo', 'nonindexable');
     } catch(dml_exception $e) {
-        return false;
-    }
-
-    $excludedurls = array_map('trim', explode(',', $excludedurlstring));
-
-    if (in_array($currentpath, $excludedurls)) {
         return true;
     }
-    return false;
+
+    $nonindexedurls = array_map('trim', explode(',', $nonindexedurlstring));
+
+    if (in_array($currentpath, $nonindexedurls)) {
+        return false;
+    }
+    return true;
 }
 
 /**
@@ -55,7 +55,7 @@ function tool_seo_is_url_excluded($currentpath) {
  *
  * @return bool
  */
-function tool_seo_is_current_page_excluded() {
+function tool_seo_is_current_page_indexable() {
     global $PAGE;
 
     // Pages to exclude from the search engine noindex block.
