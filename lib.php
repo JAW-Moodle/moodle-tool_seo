@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__ . '/locallib.php');
+
 /**
  * Callback that adds a custom html header tag to each page.
  *
@@ -31,14 +33,8 @@ defined('MOODLE_INTERNAL') || die();
  * @since  Moodle 3.3
  */
 function tool_seo_before_standard_html_head() {
-    global $PAGE;
 
-    // Pages to exclude from the search engine noindex block.
-    $excludedpages = ['test', 'login'];
-
-    // Check if the current page type matches any of the excluded page types.
-    // TODO: Should this be case insensitive?
-    if (preg_grep("/^(.*\\-)?".$PAGE->pagetype."(\\-.*)?$/", $excludedpages)) {
+    if (tool_seo_is_current_url_excluded()) {
         return '';
     }
 
