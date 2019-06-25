@@ -44,27 +44,18 @@ function tool_seo_is_url_indexable($currentpath) {
 
     $nonindexedurls = array_map('trim', explode(',', $nonindexedurlstring));
 
+    // Checks if the current path is a non-indexable url, exactly.
     if (in_array($currentpath, $nonindexedurls)) {
         return false;
     }
-    return true;
-}
 
-/**
- * Checks whether the current page type is listed in the excluded page types in the admin tools.
- *
- * @return bool
- */
-function tool_seo_is_current_page_indexable() {
-    global $PAGE;
-
-    // Pages to exclude from the search engine noindex block.
-    $excludedpages = ['test'];
-
-    // Check if the current page type matches any of the excluded page types.
-    // TODO: Should this be case insensitive?
-    if (preg_grep("/^(.*\\-)?".$PAGE->pagetype."(\\-.*)?$/", $excludedpages)) {
-        return true;
+    // Checks if a non-indexable url is part of the current path.
+    foreach ($nonindexedurls as $nonindexedurl) {
+        $nonindexedurl = preg_replace(["/\//", "/\./"], ["\/", "\."], $nonindexedurl); // Replace special char with escaped char.
+        if (preg_match("/^.*".$nonindexedurl.".*$/", $currentpath)) {
+            return false;
+        }
     }
-    return false;
+
+    return true;
 }
