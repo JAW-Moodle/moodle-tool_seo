@@ -45,6 +45,7 @@ class tool_seo_noindex_testcase extends advanced_testcase {
                 /course/view.php,
                 user,
                 test.php,
+                https://www.sitename.com/assignment/grade.php
                 ", 'tool_seo');
     }
 
@@ -97,6 +98,7 @@ class tool_seo_noindex_testcase extends advanced_testcase {
             'User URL' => ['/user/view.php', false],
             'A PHP page type' => ['/login/test.php', false],
             'Full URL' => ['http://localhost/user/index.php?id=2', false],
+            'slug-only URL' => ['/assignment/grade.php', false],
         ];
     }
 }

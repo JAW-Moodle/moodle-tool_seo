@@ -44,14 +44,21 @@ function tool_seo_is_url_indexable($currentpath) {
 
     $nonindexableurls = array_map('trim', explode(',', $nonindexableurlstring));
 
-    // Checks if the current path is a non-indexable url, exactly.
-    if (in_array($currentpath, $nonindexableurls)) {
-        return false;
-    }
+    $currentpathliteral = preg_quote($currentpath, '/');
 
-    // Checks if a non-indexable url is part of the current path.
     foreach ($nonindexableurls as $nonindexableurl) {
-        if ($nonindexableurl != '' and strpos($currentpath, $nonindexableurl) !== false) {
+        // If the url is empty, ignore
+        if ($nonindexableurl == '') {
+            continue;
+        }
+
+        // Checks if a non-indexable url is part of the current path.
+        if (strpos($currentpath, $nonindexableurl) !== false) {
+            return false;
+        }
+
+        // Checks if the current path is a slug of the non-indexable url
+        if (preg_match("/^.*$currentpathliteral$/", $nonindexableurl)) {
             return false;
         }
     }
