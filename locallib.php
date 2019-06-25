@@ -37,22 +37,21 @@ function tool_seo_is_url_indexable($currentpath) {
 
     // Get the list of URLs to be excluded from the admin settings.
     try {
-        $nonindexedurlstring = get_config('tool_seo', 'nonindexable');
+        $nonindexableurlstring = get_config('tool_seo', 'nonindexable');
     } catch(dml_exception $e) {
         return true;
     }
 
-    $nonindexedurls = array_map('trim', explode(',', $nonindexedurlstring));
+    $nonindexableurls = array_map('trim', explode(',', $nonindexableurlstring));
 
     // Checks if the current path is a non-indexable url, exactly.
-    if (in_array($currentpath, $nonindexedurls)) {
+    if (in_array($currentpath, $nonindexableurls)) {
         return false;
     }
 
     // Checks if a non-indexable url is part of the current path.
-    foreach ($nonindexedurls as $nonindexedurl) {
-        $nonindexedurl = preg_replace(["/\//", "/\./"], ["\/", "\."], $nonindexedurl); // Replace special char with escaped char.
-        if (preg_match("/^.*".$nonindexedurl.".*$/", $currentpath)) {
+    foreach ($nonindexableurls as $nonindexableurl) {
+        if ($nonindexableurl != '' and strpos($currentpath, $nonindexableurl) !== false) {
             return false;
         }
     }

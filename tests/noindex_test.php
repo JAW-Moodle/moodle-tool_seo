@@ -40,13 +40,12 @@ class tool_seo_noindex_testcase extends advanced_testcase {
     protected function setUp() {
         parent::setUp();
         // Set up non-indexable array in config.
-        global $CFG;
-        $CFG->forced_plugin_settings['tool_seo']['nonindexable'] = "
+        set_config('nonindexable', "
                 /login/index.php,
                 /course/view.php,
                 user,
                 test.php,
-                ";
+                ", 'tool_seo');
     }
 
     /**
@@ -56,12 +55,28 @@ class tool_seo_noindex_testcase extends advanced_testcase {
      * @param string A URL path representing a moodle page url.
      * @param bool True if the URL should be indexable.
      */
-    public function test_nonindexable_url_is_configured($url, $expected) {
+    public function test_nonindexable_url_configuration($url, $expected) {
         $this->resetAfterTest(true);
 
         $result = tool_seo_is_url_indexable($url);
 
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Test checks if the config value is empty.
+     *
+     * @dataProvider get_noindex_url_testcases
+     * @param string A URL path representing a moodle page url.
+     * @param bool True if the URL should be indexable.
+     */
+    public function test_empty_configuration($url, $expected) {
+        $this->resetAfterTest(true);
+        set_config('nonindexable', "", 'tool_seo');
+
+        $result = tool_seo_is_url_indexable($url);
+
+        $this->assertTrue($result);
     }
 
     /**
@@ -81,6 +96,7 @@ class tool_seo_noindex_testcase extends advanced_testcase {
             // Partial matches.
             'User URL' => ['/user/view.php', false],
             'A PHP page type' => ['/login/test.php', false],
+            'Full URL' => ['http://localhost/user/index.php?id=2', false],
         ];
     }
 }
