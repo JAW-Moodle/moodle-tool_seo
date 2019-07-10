@@ -32,6 +32,9 @@ function xmldb_tool_seo_upgrade($oldversion) {
         $nonindexableurlstring = get_config('tool_seo', 'nonindexable');
         $updatedstring = implode(PHP_EOL, array_map('trim', explode(',', $nonindexableurlstring)));
         set_config('nonindexable', $updatedstring, 'tool_seo');
+
+        // SEO savepoint reached.
+        upgrade_plugin_savepoint(true, 2019071000, 'tool', 'seo');
     }
 
     return true;
