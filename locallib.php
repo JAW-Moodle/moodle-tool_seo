@@ -42,7 +42,7 @@ function tool_seo_is_url_indexable($currentpath) {
         return true;
     }
 
-    $nonindexableurls = array_map('trim', explode(',', $nonindexableurlstring));
+    $nonindexableurls = array_map('trim', explode(PHP_EOL, $nonindexableurlstring));
 
     $currentpathliteral = preg_quote($currentpath, '/');
 

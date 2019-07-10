@@ -15,17 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Upgrade script for the SEO admin tool.
  *
  * @package    tool_seo
- * @copyright  2019 Andrew Madden <andrewmadden@catalyst-au.net>
+ * @author     Andrew Madden <andrewmadden@catalyst-au.net>
+ * @copyright  2019 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019071000;
-$plugin->release = 2019071000; // Match release exactly to version.
-$plugin->requires = 2017051509; // Moodle 3.3.9.
-$plugin->component = 'tool_seo';
-$plugin->maturity = MATURITY_ALPHA;
+function xmldb_tool_seo_upgrade($oldversion) {
+
+    if ($oldversion < 2019071000) {
+        // Replace comma separated nonindexable setting value with trimmed newline separated values.
+        $nonindexableurlstring = get_config('tool_seo', 'nonindexable');
+        $updatedstring = implode(PHP_EOL, array_map('trim', explode(',', $nonindexableurlstring)));
+        set_config('nonindexable', $updatedstring, 'tool_seo');
+
+        // SEO savepoint reached.
+        upgrade_plugin_savepoint(true, 2019071000, 'tool', 'seo');
+    }
+
+    return true;
+}

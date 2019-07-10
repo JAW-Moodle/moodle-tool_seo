@@ -27,4 +27,4 @@ $string['pluginname'] = 'SEO';
 
 // Settings.
 $string['nonindexable'] = 'Include URLs not to be indexed by search engines.';
-$string['nonindexable_help'] = 'List of (comma separated, absolute skipping wwwroot, callable) URLs that will not be indexed and profiled by search engines.';
+$string['nonindexable_help'] = 'List of URLs that will not be indexed and profiled by search engines. Enter each URL on a new line.';
