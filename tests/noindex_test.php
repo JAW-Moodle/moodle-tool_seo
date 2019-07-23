@@ -41,10 +41,10 @@ class tool_seo_noindex_testcase extends advanced_testcase {
         parent::setUp();
         // Set up non-indexable array in config.
         set_config('nonindexable', "
-                /login/index.php,
-                /course/view.php,
-                user,
-                test.php,
+                /login/index.php\n
+                /course/view.php\n
+                user\n
+                test.php\n
                 https://www.sitename.com/assignment/grade.php
                 ", 'tool_seo');
     }
