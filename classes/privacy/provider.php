@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for SEO tool
+ * Privacy implementation for tool_seo
  *
  * @package    tool_seo
  * @author     Andrew Madden <andrewmadden@catalyst-au.net>
@@ -23,12 +23,26 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'SEO';
+namespace tool_seo\privacy;
 
-// Settings.
-$string['nonindexable'] = 'Include URLs not to be indexed by search engines.';
-$string['nonindexable_help'] = 'List of URLs that will not be indexed and profiled by search engines. Enter each URL on a new line.';
+defined('MOODLE_INTERNAL') || die();
 
-// Privacy.
-$string['privacy:metadata'] = 'The SEO plugin does not store any personal data.';
+/**
+ * Privacy for tool_seo implementing null_provider.
+ *
+ * @author     Andrew Madden <andrewmadden@catalyst-au.net>
+ * @copyright  2019 Catalyst IT
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
 
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
