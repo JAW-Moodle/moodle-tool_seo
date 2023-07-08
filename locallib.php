@@ -19,13 +19,11 @@
  *
  * This is a longer description of the file.
  *
- * @package    mod_mymodule
+ * @package    tool_seo
  * @author     Andrew Madden <andrewmadden@catalyst-au.net>
  * @copyright  2019 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Checks whether the current URL is listed in the URLs to not be indexed in admin tools.
@@ -38,7 +36,7 @@ function tool_seo_is_url_indexable($currentpath) {
     // Get the list of URLs to be excluded from the admin settings.
     try {
         $nonindexableurlstring = get_config('tool_seo', 'nonindexable');
-    } catch(dml_exception $e) {
+    } catch (dml_exception $e) {
         return true;
     }
 
@@ -47,7 +45,7 @@ function tool_seo_is_url_indexable($currentpath) {
     $currentpathliteral = preg_quote($currentpath, '/');
 
     foreach ($nonindexableurls as $nonindexableurl) {
-        // If the url is empty, ignore
+        // If the url is empty, ignore.
         if ($nonindexableurl == '') {
             continue;
         }
@@ -57,7 +55,7 @@ function tool_seo_is_url_indexable($currentpath) {
             return false;
         }
 
-        // Checks if the current path is a slug of the non-indexable url
+        // Checks if the current path is a slug of the non-indexable url.
         if (preg_match("/^.*$currentpathliteral$/", $nonindexableurl)) {
             return false;
         }

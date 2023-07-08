@@ -25,8 +25,6 @@
 
 namespace tool_seo\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy for tool_seo implementing null_provider.
  *
