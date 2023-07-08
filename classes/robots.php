@@ -15,17 +15,43 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Handler for robots.txt serving
  *
  * @package    tool_seo
- * @copyright  2019 Andrew Madden <andrewmadden@catalyst-au.net>
+ * @author     Brendan Heywood <brendan@catalyst-au.net>
+ * @copyright  2023 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace tool_seo;
 
-$plugin->version = 2023070800;
-$plugin->release = 2023070800; // Match release exactly to version.
-$plugin->requires = 2017051509; // Moodle 3.3.9.
-$plugin->component = 'tool_seo';
-$plugin->maturity = MATURITY_ALPHA;
+/**
+ * Handler for robots.txt serving
+ *
+ * @author     Brendan Heywood <brendan@catalyst-au.net>
+ * @copyright  2023 Catalyst IT
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class robots {
+
+    /**
+     * This serves requests for robots.txt file.
+     */
+    public static function serve() {
+        global $ME;
+
+        if ($ME !== '/robots.txt' ) {
+            return;
+        }
+
+        $config = get_config('tool_seo');
+        if (empty($config->robotstxt)) {
+            return;
+        }
+
+        header("Content-Type: text/plain");
+        print $config->robotstxt;
+
+        die;
+    }
+}
