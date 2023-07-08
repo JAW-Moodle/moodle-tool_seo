@@ -1,3 +1,7 @@
+<a href="https://github.com/catalyst/moodle-tool_seo/actions">
+<img src="https://github.com/catalyst/moodle-tool_seo/workflows/ci/badge.svg">
+</a>
+
 # Moodle SEO admin tool
 
 This is an admin tool to help manage SEO issues. 
