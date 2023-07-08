@@ -15,25 +15,43 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Upgrade script for the SEO admin tool.
+ * Handler for robots.txt serving
  *
  * @package    tool_seo
- * @author     Andrew Madden <andrewmadden@catalyst-au.net>
- * @copyright  2019 Catalyst IT
+ * @author     Brendan Heywood <brendan@catalyst-au.net>
+ * @copyright  2023 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function xmldb_tool_seo_upgrade($oldversion) {
+namespace tool_seo;
 
-    if ($oldversion < 2019071000) {
-        // Replace comma separated nonindexable setting value with trimmed newline separated values.
-        $nonindexableurlstring = get_config('tool_seo', 'nonindexable');
-        $updatedstring = implode(PHP_EOL, array_map('trim', explode(',', $nonindexableurlstring)));
-        set_config('nonindexable', $updatedstring, 'tool_seo');
+/**
+ * Handler for robots.txt serving
+ *
+ * @author     Brendan Heywood <brendan@catalyst-au.net>
+ * @copyright  2023 Catalyst IT
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class robots {
 
-        // SEO savepoint reached.
-        upgrade_plugin_savepoint(true, 2019071000, 'tool', 'seo');
+    /**
+     * This serves requests for robots.txt file.
+     */
+    public static function serve() {
+        global $ME;
+
+        if ($ME !== '/robots.txt' ) {
+            return;
+        }
+
+        $config = get_config('tool_seo');
+        if (empty($config->robotstxt)) {
+            return;
+        }
+
+        header("Content-Type: text/plain");
+        print $config->robotstxt;
+
+        die;
     }
-
-    return true;
 }

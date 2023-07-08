@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../locallib.php');
 
+namespace tool_seo;
+
 /**
  * Test case class for the noindex tool.
  *
@@ -35,7 +37,7 @@ require_once(__DIR__ . '/../locallib.php');
  * @copyright  2019 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tool_seo_noindex_testcase extends advanced_testcase {
+class noindex_test extends advanced_testcase {
 
     protected function setUp() {
         parent::setUp();

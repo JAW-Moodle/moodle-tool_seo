@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019071000;
-$plugin->release = 2019071000; // Match release exactly to version.
+$plugin->version = 2023070800;
+$plugin->release = 2023070800; // Match release exactly to version.
 $plugin->requires = 2017051509; // Moodle 3.3.9.
 $plugin->component = 'tool_seo';
 $plugin->maturity = MATURITY_ALPHA;

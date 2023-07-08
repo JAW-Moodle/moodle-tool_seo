@@ -37,6 +37,12 @@ if ($hassiteconfig) {
             new lang_string('nonindexable', 'tool_seo'),
             new lang_string('nonindexable_help', 'tool_seo'),
             ''));
+
+        // List of URLs that won't be profiled ever.
+        $settings->add(new admin_setting_configtextarea('tool_seo/robotstxt',
+            new lang_string('robotstxt', 'tool_seo'),
+            new lang_string('robotstxt_help', 'tool_seo'),
+            ''));
     }
 }
 
