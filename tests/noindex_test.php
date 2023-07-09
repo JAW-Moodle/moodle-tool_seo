@@ -33,9 +33,9 @@ namespace tool_seo;
  * @copyright  2019 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class noindex_test extends advanced_testcase {
+class noindex_test extends \advanced_testcase {
 
-    protected function setUp() {
+    protected function setUp(): void {
         parent::setUp();
         // Set up non-indexable array in config.
         set_config('nonindexable', "
