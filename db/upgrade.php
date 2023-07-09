@@ -23,6 +23,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Upgrade
+ *
+ * @param int $oldversion old version
+ */
 function xmldb_tool_seo_upgrade($oldversion) {
 
     if ($oldversion < 2019071000) {
