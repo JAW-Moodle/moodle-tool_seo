@@ -28,4 +28,5 @@ $plugin->version = 2023070800;
 $plugin->release = 2023070800; // Match release exactly to version.
 $plugin->requires = 2017051509; // Moodle 3.3.9.
 $plugin->component = 'tool_seo';
-$plugin->maturity = MATURITY_ALPHA;
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->supported = [33, 401];     // Supports Moodle 3.5 or later.

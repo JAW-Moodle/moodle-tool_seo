@@ -28,7 +28,7 @@
 /**
  * Checks whether the current URL is listed in the URLs to not be indexed in admin tools.
  *
- * @param $currentpath string The path component of the current URL to compare against.
+ * @param string $currentpath The path component of the current URL to compare against.
  * @return bool Returns true if the URL should be indexable by search engines.
  */
 function tool_seo_is_url_indexable($currentpath) {

@@ -23,10 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once(__DIR__ . '/../locallib.php');
-
 namespace tool_seo;
 
 /**
@@ -37,9 +33,9 @@ namespace tool_seo;
  * @copyright  2019 Catalyst IT
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class noindex_test extends advanced_testcase {
+class noindex_test extends \advanced_testcase {
 
-    protected function setUp() {
+    protected function setUp(): void {
         parent::setUp();
         // Set up non-indexable array in config.
         set_config('nonindexable', "
@@ -55,12 +51,13 @@ class noindex_test extends advanced_testcase {
      * Test non-indexable URLs have been added to the admin tool setting.
      *
      * @dataProvider get_noindex_url_testcases
-     * @param string A URL path representing a moodle page url.
-     * @param bool True if the URL should be indexable.
+     * @param string $url A URL path representing a moodle page url.
+     * @param bool $expected True if the URL should be indexable.
      */
     public function test_nonindexable_url_configuration($url, $expected) {
         $this->resetAfterTest(true);
 
+        require_once(__DIR__ . '/../locallib.php');
         $result = tool_seo_is_url_indexable($url);
 
         $this->assertEquals($expected, $result);
@@ -70,13 +67,14 @@ class noindex_test extends advanced_testcase {
      * Test checks if the config value is empty.
      *
      * @dataProvider get_noindex_url_testcases
-     * @param string A URL path representing a moodle page url.
-     * @param bool True if the URL should be indexable.
+     * @param string $url A URL path representing a moodle page url.
+     * @param bool $expected True if the URL should be indexable.
      */
     public function test_empty_configuration($url, $expected) {
         $this->resetAfterTest(true);
         set_config('nonindexable', "", 'tool_seo');
 
+        require_once(__DIR__ . '/../locallib.php');
         $result = tool_seo_is_url_indexable($url);
 
         $this->assertTrue($result);
