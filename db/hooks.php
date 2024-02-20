@@ -15,18 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Hook callbacks for seo
  *
- * @package    tool_seo
- * @copyright  2019 Andrew Madden <andrewmadden@catalyst-au.net>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tool_seo
+ * @author    Benjamin Walker (benjaminwalker@catalyst-au.net)
+ * @copyright 2024 Catalyst IT
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024021901;
-$plugin->release = 2024021901; // Match release exactly to version.
-$plugin->requires = 2022112800; // Moodle 4.1.
-$plugin->component = 'tool_seo';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->supported = [401, 403];     // Supports Moodle 4.1 or later.
+$callbacks = [
+    [
+        'hook' => core\hook\output\standard_head_html_prepend::class,
+        'callback' => 'tool_seo\local\hooks\output\standard_head_html_prepend::callback',
+        'priority' => 0,
+    ],
+];
