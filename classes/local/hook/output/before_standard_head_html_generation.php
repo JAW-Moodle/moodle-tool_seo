@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace tool_seo\local\hooks\output;
+namespace tool_seo\local\hook\output;
 
 /**
  * Allows plugins to add any elements to the page <head> html tag
@@ -24,14 +24,14 @@ namespace tool_seo\local\hooks\output;
  * @copyright 2024 Catalyst IT
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class standard_head_html_prepend {
+class before_standard_head_html_generation {
 
     /**
      * Callback that adds a custom html header tag to each page.
      *
      * @param \core\hook\output\standard_head_html_prepend $hook
      */
-    public static function callback(\core\hook\output\standard_head_html_prepend $hook): void {
+    public static function callback(\core\hook\output\before_standard_head_html_generation $hook): void {
         GLOBAL $PAGE;
 
         // If URL should not be indexed, add the noindex meta tag to page.
