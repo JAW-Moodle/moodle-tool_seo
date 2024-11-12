@@ -43,12 +43,4 @@ function tool_seo_before_standard_html_head() {
     return '';
 }
 
-/**
- * Used to serve robots.txt if not found.
- *
- * @throws \moodle_exception
- */
-function tool_seo_after_config() {
-    \tool_seo\robots::serve();
-}
 

@@ -15,18 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Main library file for interfaces.
  *
  * @package    tool_seo
  * @copyright  2019 Andrew Madden <andrewmadden@catalyst-au.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace tool_seo;
 
-$plugin->version = 2024111200;
-$plugin->release = 2024111200; // Match release exactly to version.
-$plugin->requires = 2024100700; // Moodle 4.5.
-$plugin->component = 'tool_seo';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->supported = [405];     // Supports Moodle 4.1 or later.
+use core\hook\after_config;
+
+/**
+ * Hook callbacks
+ *
+ * @package    tool_seo
+ * @author     Jakob Heinemann <jakob@jakobheinemann.de>
+ */
+class hook_callbacks {
+    /**
+     * Listener for the after_config hook.
+     *
+     * overwrites page object!
+     * @param after_config $hook
+     */
+    public static function after_config(\core\hook\after_config $hook): void {
+        \tool_seo\robots::serve();
+    }
+}
